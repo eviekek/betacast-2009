@@ -1,0 +1,1 @@
+<a href="blog">Our Blog</a> | <a href="explore_betacast">Explore <?php echo $sitetitle; ?></a> | <a href="about">About Us</a> |<a href="help_center">Help Center</a> | <a href="safety">Safety Tips</a> | <a href="dev">Developers</a> |<a href="terms">Terms of Use</a> | <a href="privacy">Privacy Policy</a> | BetaCast V1.1 (January 4, 2023)

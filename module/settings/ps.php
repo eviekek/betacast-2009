@@ -1,0 +1,108 @@
+<?php
+$loggeduser = $_SESSION['username'];
+// Channel Icon
+if(!empty($_POST['icon'])) {
+	$name = $sql->real_escape_string($_POST['icon']); 
+	$ok = $sql->query("SELECT * FROM video WHERE id='$name'"); 
+	$tosetchannelicon = mysqli_fetch_assoc($ok);
+	if($tosetchannelicon['author'] !== $loggedu['username']) { 
+		$updaterr = 'Your channel icon must be your video!'; 
+	} else{ 
+		$newicon = $tosetchannelicon['thumb']; 
+		$sql->query("UPDATE `users` SET `channelicon` = '$newicon' WHERE `users`.`username` = '$loggeduser';"); 
+		$loggedu['channelicon'] = $newicon; 
+		$updateyes = true; 
+	}  header('Location: /account?m=ps');
+}
+
+// Bio
+if(isset($_POST['bio'])) { 
+$bio = $sql->real_escape_string($_POST['bio']); $bio1 = htmlspecialchars($_POST['bio']); $sql->query("UPDATE `users` SET `bio` = '$bio' WHERE `users`.`username` = '$loggeduser';"); 
+$loggedu['bio'] = $bio1; $updateyes = true; header('Location: /channel_settings');}
+
+// Connect Text
+if(!empty($_POST['connect'])) { 
+$connect = $sql->real_escape_string($_POST['connect']); $sql->query("UPDATE `users` SET `connect` = '$connect' WHERE `users`.`username` = '$loggeduser';"); 
+$loggedu['connect'] = $connect; $updateyes = true; header('Location: /channel_settings');}
+
+// comments box
+if(isset($_POST['comments'])) { 
+$comments = $sql->real_escape_string($_POST['comments']); $sql->query("UPDATE `users` SET `comments` = '$comments' WHERE `users`.`username` = '$loggeduser';"); 
+$loggedu['comments'] = $comments; $updateyes = true; header('Location: /channel_theme');}
+
+// subscriptions box
+if(isset($_POST['channelswatching'])) { 
+	$channelswatching = $sql->real_escape_string($_POST['channelswatching']); 
+	$sql->query("UPDATE `users` SET `subscriptions` = '$channelswatching' WHERE `users`.`username` = '$loggeduser';"); 
+	$loggedu['subscriptions'] = $channelswatching; $updateyes = true; header('Location: /account?m=ps');
+}
+
+// subsbox box
+if(isset($_POST['subsbox'])) { 
+	$subsbox = $sql->real_escape_string($_POST['subsbox']); 
+	$sql->query("UPDATE `users` SET `subsbox` = '$subsbox' WHERE `users`.`username` = '$loggeduser';"); 
+	$loggedu['subsbox'] = $subsbox; $updateyes = true; header('Location: /account?m=ps');
+}
+
+// profile box
+if(isset($_POST['profile'])) { 
+	$profile = $sql->real_escape_string($_POST['profile']); 
+	$sql->query("UPDATE `users` SET `profile` = '$profile' WHERE `users`.`username` = '$loggeduser';"); 
+	$loggedu['profile'] = $profile; $updateyes = true; header('Location: /account?m=ps');
+}
+
+// featured video box
+if(isset($_POST['fvid'])) { 
+	$fvid = $sql->real_escape_string($_POST['fvid']); 
+	$sql->query("UPDATE `users` SET `fvid` = '$fvid' WHERE `users`.`username` = '$loggeduser';"); 
+	$loggedu['fvid'] = $fvid; $updateyes = true; header('Location: /account?m=ps');
+}
+
+// Channel color
+if(!empty($_POST['boxhead'])) { 
+$boxhead = str_replace("#", "", substr($_POST['boxhead'], 0, 10));
+$boxhead = $sql->real_escape_string($boxhead); $sql->query("UPDATE `users` SET `chcolor` = '$boxhead' WHERE `users`.`username` = '$loggeduser';"); 
+$loggedu['chcolor'] = $boxhead; $updateyes = true; }
+?>
+<?php if(isset($updateyes)) { ?><div style="border: 3px solid green;padding: 6px;margin-top: 6px;margin-bottom: 6px;text-align: center;font-weight: bold;font-size: 14px;color: green;"> Your <a href="/user/<?php echo $loggedu['username'] ?>">Channel</a> has been updated successfully!</div><?php } ?>
+<form method="post" action="">
+		<h1><a>Colors</a></h1>
+			Main Color: <input name="boxhead" type="color" placeholder="c o l o r" value="#<?php echo $loggedu['chcolor'] ?>"><br>							<input type="submit" value="Update">
+			<br><br>
+<!-- old channel pic update 
+		<h1><a>Channel Picture</a></h1>
+		<?php $name = $sql->real_escape_string($loggedu['channelicon']); $ok = $sql->query("SELECT * FROM video WHERE thumb='$name'");
+		$channelicon = mysqli_fetch_assoc($ok); ?>
+		<input name="icon" placeholder="Video ID" <?php if($loggedu['channelicon'] !== 'novideo') { ?>value="<?php echo $channelicon['id'] ?>"<?php } ?>>
+		<input type="submit" value="Upload Image" name="submit">
+-->
+		<h1><a>Bio</a></h1>
+		<textarea name="bio" placeholder="Enter Bio Here" maxlength="256"><?php echo $loggedu['bio'] ?></textarea>
+	
+	<br><br><h1><a>Boxes</a></h1>
+				<label for="layout">Comments:</label>
+				<select id="comments" name="comments" value="<?php echo $loggedu['comments']; ?>">
+					<option<?php if($loggedu['comments'] == "n") { echo ' selected'; } ?> value="n">Hide</option>
+					<option<?php if($loggedu['comments'] == "r") { echo ' selected'; } ?> value="r">Right</option>
+					<option<?php if($loggedu['comments'] == "l") { echo ' selected'; } ?> value="l">Left</option>
+				</select><br>
+				<label for="layout">Subscriptions:</label>
+				<select id="Subscriptions" name="channelswatching" value="<?php echo $loggedu['subscriptions']; ?>">
+					<option<?php if($loggedu['subscriptions'] == "n") { echo ' selected'; } ?> value="n">Hide</option>
+					<option<?php if($loggedu['subscriptions'] == "r") { echo ' selected'; } ?> value="r">Right</option>
+					<option<?php if($loggedu['subscriptions'] == "l") { echo ' selected'; } ?> value="l">Left</option>
+				</select><br>
+				<label for="layout">Subscribers:</label>
+				<select id="subsbox" name="subsbox" value="<?php echo $loggedu['subsbox']; ?>">
+					<option<?php if($loggedu['subsbox'] == "n") { echo ' selected'; } ?> value="n">Hide</option>
+					<option<?php if($loggedu['subsbox'] == "r") { echo ' selected'; } ?> value="r">Right</option>
+					<option<?php if($loggedu['subsbox'] == "l") { echo ' selected'; } ?> value="l">Left</option>
+				</select><br>
+				<label for="layout">Featured Video:</label>
+				<select id="fvid" name="fvid" value="<?php echo $loggedu['fvid']; ?>">
+					<option<?php if($loggedu['fvid'] == "n") { echo ' selected'; } ?> value="n">Hide</option>
+					<option<?php if($loggedu['fvid'] == "r") { echo ' selected'; } ?> value="r">Show</option>
+				</select><br>
+				<center><br>
+				<input type="submit" value="Update"></center>
+</form>

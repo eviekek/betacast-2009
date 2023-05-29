@@ -1,0 +1,59 @@
+var _____WB$wombat$assign$function_____ = function(name) {return (self._wb_wombat && self._wb_wombat.local_init && self._wb_wombat.local_init(name)) || self[name]; };
+if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; return this; } }
+{
+  let window = _____WB$wombat$assign$function_____("window");
+  let self = _____WB$wombat$assign$function_____("self");
+  let document = _____WB$wombat$assign$function_____("document");
+  let location = _____WB$wombat$assign$function_____("location");
+  let top = _____WB$wombat$assign$function_____("top");
+  let parent = _____WB$wombat$assign$function_____("parent");
+  let frames = _____WB$wombat$assign$function_____("frames");
+  let opener = _____WB$wombat$assign$function_____("opener");
+
+function loadUploadResponseVariables(upload_response_variables) {
+	if (upload_response_variables.upload_response) {
+		window.parent.uploaded_background_image(upload_response_variables);
+	}
+}
+
+function uploadBackgroundImage() {
+	var submitButtons = window.parent.document.getElementsByName('submit');
+	for (i = 0; i < submitButtons.length; i++) {
+		submitButtons[i].disabled = true;
+	}
+	_gel('imageUploadForm').submit();
+	_gel('choices').style.display = 'none';
+	_gel('body_background_image_path').style.display = 'none';
+	_gel('spinny').style.display = '';
+}
+function deleteImage(upload_type) {
+	_gel('choices').style.display = 'none';
+	_gel('body_background_image_path').style.display = 'inline';
+	window.parent.delete_background_upload(upload_type);
+}
+
+
+}
+/*
+     FILE ARCHIVED ON 23:33:42 Aug 15, 2010 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 20:52:32 Apr 07, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 753.761
+  exclusion.robots: 640.78
+  exclusion.robots.policy: 640.773
+  xauthn.identify: 531.147
+  xauthn.chkprivs: 109.461
+  cdx.remote: 0.053
+  esindex: 0.006
+  LoadShardBlock: 62.459 (3)
+  PetaboxLoader3.datanode: 62.935 (4)
+  CDXLines.iter: 15.538 (3)
+  load_resource: 420.124
+  PetaboxLoader3.resolve: 391.268
+*/

@@ -1,0 +1,38 @@
+RewriteEngine On
+
+# Ignore requests for some things
+RewriteRule ^(.*).css$ /$1.css [NC,END]
+RewriteRule ^(.*).js$ /$1.js [NC,END]
+RewriteRule ^(.*).php$ /$1.php [NC,END]
+RewriteRule ^vi/(.*)$ /vi/$1 [NC,END]
+RewriteRule ^img/(.*)$ /img/$1 [NC,END]
+RewriteRule ^assets/(.*)$ /assets/$1 [NC,END]
+RewriteRule ^peepeeadmin/(.*)$ /peepeeadmin/$1 [NC,END]
+RewriteRule ^modules/(.*)$ /404page.php [NC,END]
+
+# Redirect root URL to index.php
+RewriteRule ^$ /index.php [END]
+
+# Redirect requests for /topic-id to /topic.php?id=id
+RewriteRule ^topic-(.*)$ /topic.php?id=$1 [END]
+
+# Redirect requests for /user/profilename to /profile.php?user=profilename
+RewriteRule ^user/([^/]*)$ /profile.php?user=$1 [NC,END]
+
+# Redirect requests for /user/profilename/menu to /profile_menu.php?user=profilename
+RewriteRule ^user/([^/]+)/(videos|favorites|playlist|subscribers|subscriptions|comment_all)$ profile_$2.php?user=$1 [NC,END]
+
+# Add .php extension to URLs that do not have one
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [NC,END]
+
+# Redirect to vanity page for non-existent URLs
+RewriteRule ^([^/]*)$ profile.php?vanity=$1 [NC,END]
+RewriteRule ^(.*)/(videos|favorites|playlist|subscribers|subscriptions|comment_all)?$ profile_$2.php?vanity=$1 [NC,END]
+
+# Return 404 error page for non-existent URLs
+ErrorDocument 404 /404error.php
+
+# Disable directory listing
+Options -Indexes
