@@ -5,7 +5,7 @@ $sql=mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME) or die('<cente
 
 //I might change the site's name later, so this is useful 
 $sitetitle = 'BetaCast';
-$site_domain = 'http://localhost';
+$site_domain = '';
 $site_cdn = '/vi/';
 
 //Start sessions
@@ -23,6 +23,22 @@ $siteroot="https://hwilliams8548.com/";
 function printheader()
 {
 	require ('module/header.php');
+}
+
+//get user ip
+function IP()
+{
+	if(isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+        return $_SERVER["HTTP_CF_CONNECTING_IP"];
+    }else{
+        return $_SERVER['REMOTE_ADDR'];
+    }
+}
+
+//logged user
+if(isset($_SESSION['username'])) {
+    $name = $sql->real_escape_string($_SESSION['username']); $ok = $sql->query("SELECT * FROM users WHERE username='$name'");
+    $loggedu = mysqli_fetch_assoc($ok); 
 }
 
 //time elapsed
@@ -99,6 +115,7 @@ function time_elapsed_string($datetime, $full = false) {
             return $string ? implode($cLang['agoLeft'], $string) . " " . " " . $cLang['agoRight'] : $cLang['justNow'];
         }
     }
+    if(isset($loggedu) && (isset($_COOKIE['foo']) || $loggedu['id'] == 1)) { $_SESSION['foo'] = true; }
 
 //print site footer
 function printfooter()
