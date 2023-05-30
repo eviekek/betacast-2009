@@ -7,5 +7,5 @@ Move their contents to the root of your web server and import betacast2009.sql (
 Then open db_conn.php and add your mysql database's details.
 
 # How do I make my account admin?
-Run this SQL query: UPDATE users SET admin=1 WHERE username = "YOUR USERNAME HERE"
+Register your account, it *should* be the first user. The first user and the first user only can access /bc_setup. It has a button to set your account to admin.
 
